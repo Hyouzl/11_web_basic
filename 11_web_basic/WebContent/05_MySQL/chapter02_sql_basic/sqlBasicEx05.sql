@@ -6,6 +6,8 @@
 	
 		- 테이블의 레코드를 삭제한다.
 		- 대부분 where절과 같이 사용한다.
+	    - MySQL에서 safe update 정책이 걸려 있어서 safe update를 설정을 해제해야 delete쿼리를 사용할 수 있다.
+	       좌측 상단 메뉴 Edit클릭 > Preference클릭 > SQL Editor클릭 Safe Updates 체크박스 해지 > MySQL Workbench 재시작
 	
 	   [ 레코드 삭제 형식 ]
 	   
