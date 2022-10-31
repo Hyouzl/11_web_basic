@@ -32,23 +32,47 @@ INSERT INTO EMP VALUES (7934 , 'MILLER' , 'CLERK' , '1982-01-23' , 1300 , NULL ,
 
 # 1) 사원 테이블의 모든 레코드를 조회하시오.
 
+SELECT *
+FROM EMP;
+
 
 # 2) 사원명과 입사일을 조회하시오.
+
+SELECT NAME, DEPT_NO
+FROM EMP;
 
 
 # 3) 사원번호와 이름을 조회하시오.	
 
+SELECT EMP_NO, NAME
+FROM EMP;
+
 
 # 4) 사원테이블에 있는 직책의 목록(중복제거)을 조회하시오.
 
-
+SELECT DISTINCT 
+		JOB
+FROM EMP;
+		
 # 5) 부서번호가 10인 사원을 조회하시오.
+
+SELECT *
+FROM EMP
+WHERE DEPT_NO = 10;
 
 
 # 6) 월급여가 2500이상 되는 사원을 조회하시오.
 
+SELECT *
+FROM EMP
+WHERE SALARY >= 2500;
+
 
 # 7) 이름이 'KING'인 사원을 조회하시오.
+
+
+
+
 
 
 # 8) 사원중 이름이 S로 시작하는 사원의 사원번호와 이름을 조회하시오.

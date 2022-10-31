@@ -31,12 +31,51 @@
 */
 
 
+UPDATE PRODUCT SET PRODUCT_NM = '조립PC' WHERE PRODUCT_CD = 'P1003';
+
+
 # 'P10003'상품의 가격을 1000000, 등록시간을 현재시간으로 변경하기.
+
+UPDATE 
+		PRODUCT
+SET
+		PRICE = 1000000,
+		REG_DT = NOW()
+WHERE
+		PRODUCT_CD = 'P1003';
 	
 # 'P10003'상품의 가격을 기존가격에서 1000원 증가 , 등록시간을 현재시간으로 변경하기.
-		
+
+UPDATE
+			PRODUCT
+SET
+		PRICE = PRICE + 1000,
+        REG_DT = NOW()
+WHERE
+		PRODUCT_CD = 'P1003';
+
+        
+        
 # 'P10004'상품의 가격을 30750으로 변경 , 등록시간을 현재시간으로 변경하기.		
+
+UPDATE
+		PRODUCT
+SET
+		PRICE = 30750,
+        REG_DT = NOW()
+WHERE
+		PRODUCT_CD = 'P1004';
+
 
 # 'P10005'등록시간을 현재시간으로 변경하기.				
 
+UPDATE
+		PRODUCT
+SET
+		REG_DT = NOW()
+WHERE
+		PRODUCT_CD = 'P1005';
 		
+        
+        
+SELECT * FROM PRODUCT;
