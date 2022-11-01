@@ -22,80 +22,265 @@ USE EMPLOYEES;
 
 # 전체 데이터 조회하기. (DEPARTMENTS)
 
+SELECT 
+		*
+FROM
+		DEPARTMENTS;
+
+
 
 # 전체 데이터 조회하기. (DEPT_MANAGER)
+
+SELECT
+		*
+FROM
+		DEPT_MANAGER;
     
     
 # 전체 데이터 조회하기. (TITLES)
+
+SELECT
+		*
+FROM 
+		TITLES;
         
         
 # 직함을 중복되지않게 가져오기. (TITLES)
 
+SELECT DISTINCT
+		TITLE
+FROM 
+		TITLES;
+
 
 # 부서번호를 중복없이 조회하기.(DEPT_EMP)
+
+SELECT  DISTINCT
+		DEPT_NO
+FROM
+		DEPT_EMP;
   
         
 # 모든 컬럼을 10개의 레코드만 조회하기 (EMPLOYEES)
+
+SELECT
+		*
+FROM 
+		EMPLOYEES
+LIMIT
+		10;
+
  
  
 # 모든 컬럼을 10번째부터 3레코드만 조회하기 (EMPLOYEES)
+
+SELECT
+		*
+FROM
+		EMPLOYEES
+LIMIT
+		10,3;
+
 
 
 # 사원번호 , 이름(성,이름) 조회하기. (EMPLOYEES)
 
 
+SELECT
+		EMP_NO,
+        FIRST_NAME, 
+        LAST_NAME
+FROM
+		EMPLOYEES;
+
 # 사원번호 , 생년월일 , 성별 조회하기.(EMPLOYEES)
+
+SELECT
+		EMP_NO,
+        BIRTH_DATE,
+        GENDER
+FROM
+		employees;
  
 
  # 부서번호 , 부서 이름 조회하기.(DEPARTMENTS)
  
+ SELECT 
+		DEPT_NO, 
+        DEPT_NAME
+FROM
+		DEPARTMENTS;
+ 
  
  # 사원번호 , 급여 조회하기.(SALARIES) 
  
+ SELECT
+		EMP_NO, 
+        SALARY
+FROM 
+		SALARIES;
+ 
  
  # 사원번호 , 직함 이름을 조회하기. (TITLES)
+ 
+ SELECT
+		EMP_NO,
+        TITLE
+FROM
+		TITLES;
     
 
 # 급여 , 10 % 인상된 금액 조회하기.(SALARIES)
-	
-		
-# 급여 , 10 % 인하된 금액 조회하기.(SALARIES)
 
+SELECT
+		SALARY,
+        SALARY + (SALARY * 0.1) AS UP10PER
+FROM 
+		SALARIES;
+
+
+# 급여 , 10 % 인하된 금액 조회하기.(SALARIES)
+SELECT
+		SALARY,
+        SALARY - (SALARY * 0.1) AS DOWNN10PER
+FROM 
+		SALARIES;
 	
 # 사원번호 , 급여 , 3.3%세금 , 세금 공제후 실 급여 조회하기. (SALARIES)
+
+SELECT
+		EMP_NO,
+        SALARY,
+        SALARY * 0.33  ,
+        SALARY - (SALARY * 0.33)
+FROM
+		SALARIES;
 
 
 # 1986년 이후에 입사한 사원들의 정보. (EMPLOYEES)
 
+SELECT
+		*
+FROM
+		EMPLOYEES
+WHERE
+		SUBSTRING(HIRE_DATE,1,4) > 1986; 
+		
 
 # 'd001'부서의 매니저 중에 1990년 이후부터 근무했던 매니저의 사원번호 , 부서번호 , 근무시작날짜 조회하기. (DEPT_MANAGER) 
+
+SELECT
+		EMP_NO, DEPT_NO, FROM_DATE
+FROM
+		DEPT_MANAGER
+WHERE
+		DEPT_NO = 'd001' AND SUBSTRING(FROM_DATE,1,4) > 1990;
+	
+	
+
 
 
 # 'd001'부서와 'd002'부서 매니저의 사원번호 , 부서번호를 조회하기. (DEPT_MANAGER)
 
 
+SELECT
+		EMP_NO,
+        DEPT_NO
+FROM
+		DEPT_MANAGER
+WHERE
+		#DEPT_NO = 'd001' OR DEPT_NO = 'd002';
+		DEPT_NO IN ('d001','d002');
+
 # 'd003' 부서가 아닌 사원번호 , 부서번호를 조회하기. (DEPT_MANAGER)
+
+SELECT
+		EMP_NO,
+        DEPT_NO
+FROM
+		DEPT_MANAGER
+WHERE 
+		NOT DEPT_NO = 'd003';
 
 
 # 급여가 60000 이상 70000 이하인 사원의 사원번호 , 급여를 조회하기. (SALARIES)
 
+SELECT
+		EMP_NO,
+        SALARY
+FROM 
+		SALARIES
+WHERE
+		SALARY BETWEEN 60000 AND 70000;
+
 
 # 급여가 150000이상인 사원들의 사원번호 , 급여를 조회하기. (SALARIES)
 
+SELECT
+		EMP_NO,
+        SALARY
+FROM
+		SALARIES
+WHERE
+		SALARY >= 150000;
+
 
 # 급여가 100000이하인 사원들의 사원번호 , 급여를 조회하기. (SALARIES)
+SELECT
+		EMP_NO,
+        SALARY
+FROM
+		SALARIES
+WHERE
+		SALARY <= 100000;
+
 	
     
 # 1990년 이후부터 매니저로 근무 하고 있는 사원들의 사원번호 , 부서번호 , 매니저 근무시작날짜 조회하기. (DEPT_MANAGER)
 
+SELECT
+		EMP_NO,
+        DEPT_NO,
+        FROM_DATE
+FROM
+		DEPT_MANAGER
+WHERE
+		SUBSTRING(FROM_DATE,1,4) > 1990; 
+
+
+
 	
 # 1990년 이전에 입사한 사원들의 사원번호 , 입사일자 조회하기. (EMPLOYEES)
+
+SELECT
+		EMP_NO,
+        HIRE_DATE
+FROM
+		EMPLOYEES
+WHERE
+		SUBSTRING(HIRE_DATE,1,4) < 1990;
+
 		
 		
 # 1990년 이후에 입사한 남자사원의 사원번호 , 성별 , 입사일 조회하기. (EMPLOYEES)
 
 
+SELECT
+		EMP_NO,
+        GENDER,
+        HIRE_DATE
+FROM
+		EMPLOYEES
+WHERE
+		SUBSTRING(HIRE_DATE, 1, 4) > 1990;
+
+
 # 1990년 이후부터 60000이상의 급여를 받는 사원의 사원번호 , 급여 날짜 조회하기. (SALARIES)
+
+SELECT
+		EMP_NO,
+        
+
 
 
 # 'd001'부서와 'd002'부서 매니저의 사원번호 , 부서번호 조회하기. (DEPT_MANAGER)
