@@ -160,8 +160,7 @@ WHERE
 # 사용자별로 주문상품의 건수를 조회하기
 
 SELECT
-		MEMBER_ID,
-        COUNT(*)
+		MEMBER_ID
 FROM 
 		ORDER_TB
 GROUP BY
