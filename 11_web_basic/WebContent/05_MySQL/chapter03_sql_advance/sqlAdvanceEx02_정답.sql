@@ -227,30 +227,128 @@ FROM
 			  ON O.MEMBER_ID = M.MEMBER_ID
 	  INNER JOIN PRODUCT_TB P
 			  ON O.PRODUCT_CD = P.PRODUCT_CD
-			 AND PRODUCT_NM = 'Apple 2020 맥북 에어 13'
+			 AND PRODUCT_NM = 'Apple 2020 맥북 에어 13';
 
 # 1000000 ~ 2000000가격의 판매된 상품별로 상품의 코드 , 이름 , 총 판매량 조회하기
 
-		
+SELECT
+		P.PRODUCT_CD,
+        P.PRODUCT_NM,
+        SUM(O.ORDER_GOODS_QTY) AS TOTAL_GOODS_QTY,
+        PRICE
+FROM
+		ORDER_TB O
+	INNER JOIN PRODUCT_TB P
+			ON O.PRODUCT_CD = P.PRODUCT_CD
+		   AND PRICE BETWEEN 1000000 AND 2000000
+GROUP BY
+		P.PRODUCT_CD;
+        
 # 1000000 ~ 2000000가격의 판매된 상품별로 상품의 코드 , 이름 , 총 판매량을 조회하되 판매량이 5개 이상인 상품을 판매량이 높은순서 , 상품이름을 ㄱ~ㅎ 순서로 조회하기
 
+SELECT
+		P.PRODUCT_CD,
+        P.PRODUCT_NM,
+        SUM(O.ORDER_GOODS_QTY) AS TOTAL_GOODS_QTY,
+        P.PRICE
+FROM
+		ORDER_TB O
+	INNER JOIN PRODUCT_TB P
+			ON O.PRODUCT_CD = P.PRODUCT_CD
+		   AND P.PRICE BETWEEN 1000000 AND 2000000 
+GROUP BY
+		P.PRODUCT_CD
+HAVING
+		TOTAL_GOODS_QTY >= 5
+ORDER BY
+		TOTAL_GOODS_QTY DESC,
+		P.PRODUCT_NM;
 
 # 한번에 주문 수량이 10개 이상인 상품 정보 모두와 주문수량 조회하기.
 
+SELECT
+		P.*,
+        O.ORDER_GOODS_QTY AS TOTAL_GOODS_QTY
+FROM
+		ORDER_TB O
+	  INNER JOIN PRODUCT_TB P
+			  ON O.PRODUCT_CD = P.PRODUCT_CD
+			 AND ORDER_GOODS_QTY >= 10;
+
+		
+
+
 
 # 2020년 동안 판매된 매출총액 조회하기.(가격 * 개수 + 배송비)
-			
 
+SELECT
+		SUM(P.PRICE * O.ORDER_GOODS_QTY + P.DELIVERY_PRICE) AS TOTAL_SALES
+        
+FROM
+		ORDER_TB O
+	  INNER JOIN PRODUCT_TB P
+			  ON O.PRODUCT_CD = P.PRODUCT_CD
+			 AND O.ORDER_DT BETWEEN '2020-01-01' AND '2020-12-31';
 # '상품별'로 2020년 동안 판매된 수량(내림차순)순으로 정렬하여 상품코드 , 상품이름 , 상품판매량 조회하기.
+
+SELECT
+		P.PRODUCT_CD,
+        P.PRODUCT_NM,
+        SUM(O.ORDER_GOODS_QTY) AS TOTAL_GOODS_QTY,
+        O.ORDER_DT
+FROM
+		ORDER_TB O
+	  INNER JOIN PRODUCT_TB P
+			  ON O.PRODUCT_CD = P.PRODUCT_CD
+			 AND O.ORDER_DT BETWEEN '2020-01-01' AND '2020-12-31'
+GROUP BY
+		P.PRODUCT_CD 
+ORDER BY
+		O.ORDER_GOODS_QTY DESC;
 
 
 # '지역별'로 판매량이 많은 순서대로 정렬하여 지역명과 판매량 조회하기.
 
 
+SELECT
+		M.RESIDENCE,
+        SUM(O.ORDER_GOODS_QTY) AS TOTAL_GOODS_QTY
+FROM
+		ORDER_TB O
+	  INNER JOIN MEMBER_TB M
+			  ON O.MEMBER_ID = M.MEMBER_ID
+GROUP BY
+		M.RESIDENCE
+ORDER BY
+		TOTAL_GOODS_QTY DESC;
+        
+ 
 # 배송이 완료된 상품의 회원테이블의 모든 정보와 배송상태 조회하기.
 
-
+SELECT
+		M.*,
+        O.DELIVERY_STATUS
+FROM
+		  ORDER_TB O
+		INNER JOIN MEMBER_TB M
+				ON O.MEMBER_ID = M.MEMBER_ID
+			   AND DELIVERY_STATUS = '배송완료';
+               
 # '배송이 완료되지 않은 상품'별로  상품코드 , 상품 이름 , 배송이 완료되지 않은 주문 건수 조회하기.
+
+SELECT
+		P.PRODUCT_CD,
+        P.PRODUCT_NM,
+        O.DELIVERY_STATUS,
+        COUNT(*) 
+FROM
+		  ORDER_TB O
+		INNER JOIN PRODUCT_TB P
+				ON O.PRODUCT_CD = P.PRODUCT_CD
+			   AND NOT O.DELIVERY_STATUS ='배송완료'
+GROUP BY
+		P.PRODUCT_CD;
+
 
 
 # '상품별'로 상품코드,상품이름,판매금액 총합을 판매급액이 많은 순으로 조회하기. 
