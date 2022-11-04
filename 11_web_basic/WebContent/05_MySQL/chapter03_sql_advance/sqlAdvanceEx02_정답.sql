@@ -353,19 +353,105 @@ GROUP BY
 
 # '상품별'로 상품코드,상품이름,판매금액 총합을 판매급액이 많은 순으로 조회하기. 
 
+SELECT 
+		P.PRODUCT_CD,
+        P.PRODUCT_NM,
+        SUM(P.PRICE * O.ORDER_GOODS_QTY + P.DELIVERY_PRICE) AS TOTAL_SALES
+FROM 
+		ORDER_TB O
+	  INNER JOIN PRODUCT_TB P
+			  ON O.PRODUCT_CD = P.PRODUCT_CD
+GROUP BY
+		P.PRODUCT_CD
+ORDER BY
+		TOTAL_SALES DESC;
+
+
+
 
 # '메르켈' 회원의 주문 상품 이름과 배송상태를 조회하기.
+
+
+SELECT
+		P.PRODUCT_NM,
+        O.DELIVER_STATUS
+FROM
+		ORDER_TB O
+	  INNER JOIN MEMBER_TB M
+			  ON O.MEMBER_ID = M.MEMBER_ID
+			 AND M.MEMBER_NM = '메르켈'
+	  INNER JOIN PRODUCT_TB P
+			  ON O.PRODUCT_CD = P.PRODUCT_CD;
+
 
 
 # '메르켈' 회원의 주문금액 총합을 조회하기.
 
 
+SELECT
+		SUM(O.ORDER_GOODS_QTY * P.PRICE + P.DELIVERY_PRICE) 
+FROM
+		ORDER_TB O
+	  INNER JOIN MEMBER_TB M
+			  ON O.MEMBER_ID = M.MEMBER_ID
+			 AND M.MEMBER_NM = '메르켈'
+	  INNER JOIN PRODUCT_TB P
+			  ON O.PRODUCT_CD = P.PRODUCT_CD;
+
+
 #'사용자'별로 사용자 아이디 , 사용자 이름 , 주문금액 총합을 조회 하기.
+
+SELECT
+		M.MEMBER_ID,
+        M.MEMBER_NM,
+        SUM(P.PRICE * O.ORDER_GOODS_QTY + P.DELIVERY_PRICE)
+FROM
+		ORDER_TB O 
+	  INNER JOIN MEMBER_TB M
+			  ON O.MEMBER_ID = M.MEMBER_ID
+	  INNER JOIN PRODUCT_CD P
+			  ON O.PRODUCT_CD = P.PRODUCT_CD
+GROUP BY
+		M.MEMBER_ID
+
 
 
 # '사용자'별로 주문금액 총합이 700만원 이상인 회원의 아이디 , 이름 , 주문금액을 조회하기.
 
 
-#'사용자'별로 주문금액 총합이 가장 많은 사람 3명의 이름과 총 주문 금액을 순서대로 조회하기.
+SELECT
+		M.MEMBER_ID,
+        M.MEMBER_NM,
+        SUM(P.PRICE * O.ORDER_GOODS_QTY + P.DELIVERY_PRICE) AS TOTAL_SALES
+FROM 
+				ORDER_TB O 
+	  INNER JOIN MEMBER_TB M
+			  ON O.MEMBER_ID = M.MEMBER_ID
+	  INNER JOIN PRODUCT_CD P
+			  ON O.PRODUCT_CD = P.PRODUCT_CD
+GROUP BY
+		M.MEMBER_ID
+HAVING
+		TOTAL_SALES >= 7000000;
+	
 
+
+#'사용자'별로 주문금액 총합이 가장 많은 사람 3명의 이름과 총 주문 금액을 순서대로 조회하기.
+SELECT
+        M.MEMBER_NM,
+        SUM(P.PRICE * O.ORDER_GOODS_QTY + P.DELIVERY_PRICE) AS TOTAL_SALES
+FROM 
+				ORDER_TB O 
+	  INNER JOIN MEMBER_TB M
+			  ON O.MEMBER_ID = M.MEMBER_ID
+	  INNER JOIN PRODUCT_CD P
+			  ON O.PRODUCT_CD = P.PRODUCT_CD
+GROUP BY
+		M.MEMBER_ID
+ORDER BY
+		TOTAL_SALES DESC
+LIMIT 
+		3;
+        
+DROP DATABASE JOIN_TEST;
         

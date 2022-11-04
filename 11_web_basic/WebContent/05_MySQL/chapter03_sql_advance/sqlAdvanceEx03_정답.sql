@@ -1,12 +1,45 @@
+USE EMPLOYEES;
+
 # 사원번호 , 부서번호 , 근무 부서 이름을 가져오기. (DEPT_EMP , DEPARTMENTS)
+
+SELECT
+		EMP_NO,
+        DEPT_NO, 
+        DEPT_NAME
+FROM
+		  DEPARTMENTS D
+	INNER JOIN DEPT_EMP DE
+			ON D.DEPT_NO = DE.DEPT_NO;
 
 
 
 # 사원번호 , 이름(first,last) , 직함을 조회하기. (EMPLOYEES , TITLES)
+
+SELECT
+		E.EMP_NO,
+        E.FIRST_NAME,
+        E.LAST_NAME,
+        T.TITLE
+FROM
+		 EMPLOYEES E
+		INNER JOIN TITLE T
+				ON E.EMP_NO = T.EMP_NO;
+         
     
     
     
 # 사원번호 , 이름(first_name,last_name) , 부서번호 , 부서이름을 조회하기. (EMPLOYEES , DEPT_EMP , DEPARTMENTS)
+
+SELECT
+		E.EMP_NO,
+        E.FIRST_NAME,
+        E.LAST_NAME,
+        D.DEPT_NO,
+        D.DEPT_NAME
+FROM
+		EMPLOYEES E
+        
+
 
 			   
 
