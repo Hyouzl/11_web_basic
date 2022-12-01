@@ -4,6 +4,31 @@
 <meta charset="UTF-8">
 <title>연습예제</title>
 </head>
+<script src="../js/jquery-3.6.1.min.js"></script>
+<script>
+
+	$(document).ready(function(){
+			$("#answer").click(function(){
+				var isExsist = false;
+				var answer = $("#inputBrowser").val();
+				$("[name='browser']").each(function() {
+					if($(this).val() == answer) {
+						$(this).prop("checked",true);
+						isExsist = true;
+					}
+					
+				});
+				if(isExsist == false) {
+					
+					alert("값이 존재하지 않습니다.");
+					
+				}
+				
+			});	
+	});
+	
+
+</script>
 <body>
 	
 	<!--  
