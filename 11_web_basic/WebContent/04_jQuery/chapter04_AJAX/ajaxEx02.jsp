@@ -38,8 +38,8 @@
 	2) type     : 데이터 전송방식( GET 또는 POST )을 작성한다.
 	3) async	: true가 기본이며 비동기식으로 동작한다. false로 설정하게되면 동기방식으로 동작한다.
 	4) cache    : 요청 페이지의 캐시 여부(false 또는 true)를 작성한다. 
-	5) datatype : 서버에서 받아올 데이터를 어떤 형태(xml, json, html, script)로 해석할 것인지를 작성한다.
-	6) data     : 서버에 전송하고 싶은 데이터를 작성한다.
+	5) data     : 서버에 전송하고 싶은 데이터를 작성한다.
+	6) datatype : 서버에서 받아올 데이터를 어떤 형태(xml, json, html, script)로 해석할 것인지를 작성한다.
 	7) success  : Ajax 통신에 성공했을 때 실행되는 이벤트
 	8) error    : Ajax 통신에 실패했을 때 실행되는 이벤트
 	9) complete : Ajax 통신의 성공 및 실패와 상관없이 반드시 실행되는 이벤트
